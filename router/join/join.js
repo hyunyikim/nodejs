@@ -28,9 +28,12 @@ router.post('/', function(req, res){
   var name = body.name;
   var pwd = body.password;
 
-  var query = connection.query('insert into user_node (email, name, pwd) values ("' + email + '","' + name + '","' + pwd + '")', function(err, rows){
+  var sql = {email : email, name : name, pwd : pwd};
+  var query = connection.query('insert into user_node set ?', sql, function(err, rows){
+  //var query = connection.query('insert into user_node (email, name, pwd) values ("' + email + '","' + name + '","' + pwd + '")', function(err, rows){
     if(err) {throw err;}
     console.log("ok db insert");
+    res.render('welcome.ejs', {'email':email, 'name':name, 'pwd':pwd});
   })
 });
 
